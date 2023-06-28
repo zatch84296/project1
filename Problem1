@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Clock</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .clock-container {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      margin: 100px auto;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 24px;
+      color: #777;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 24px;
+      background-color: #777;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .headline {
+      font-size: 36px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <h1 class="headline">Digital Clock</h1>
+    <h1 id="clock">00:00:00</h1>
+    <p id="date">January 1, 2023</p>
+    <div class="button-container">
+      <button id="startButton" onclick="startClock()">Start</button>
+      <button id="stopButton" onclick="stopClock()">Stop</button>
+    </div>
+  </div>
+
+  <script>
+    var intervalId;
+
+    function startClock() {
+      // Clear any existing interval to prevent multiple intervals running simultaneously
+      clearInterval(intervalId);
+
+      // Update the clock and date immediately to display the current time and date
+      updateClock();
+
+      // Start the clock by updating every second (1000 milliseconds)
+      intervalId = setInterval(updateClock, 1000);
+    }
+
+    function stopClock() {
+      // Clear the interval to stop updating the clock
+      clearInterval(intervalId);
+    }
+
+    function updateClock() {
+      var currentTime = new Date();
+      var hours = pad(currentTime.getHours());
+      var minutes = pad(currentTime.getMinutes());
+      var seconds = pad(currentTime.getSeconds());
+
+      var formattedTime = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("clock").textContent = formattedTime;
+
+      var month = currentTime.toLocaleString("default", { month: "long" });
+      var day = currentTime.getDate();
+      var year = currentTime.getFullYear();
+
+      var formattedDate = month + " " + day + ", " + year;
+      document.getElementById("date").textContent = formattedDate;
+    }
+
+    function pad(value) {
+      return value.toString().padStart(2, "0");
+    }
+  </script>
+</body>
+</html>
